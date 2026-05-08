@@ -18,20 +18,26 @@ export default async function TagsPage() {
       });
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">标签</h1>
+    <div className="mx-auto max-w-3xl px-6 py-16">
+      <header className="mb-12 animate-fade-in">
+        <h1 className="text-4xl font-bold tracking-tight text-stone-900 dark:text-stone-50">标签</h1>
+        <p className="mt-3 text-muted dark:text-muted-dark">按主题浏览文章</p>
+      </header>
+
       {tags.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400">暂无标签</p>
+        <p className="text-muted dark:text-muted-dark py-12 text-center">暂无标签</p>
       ) : (
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 animate-fade-in stagger-1">
           {tags.map((tag) => (
             <Link
               key={tag.id}
               href={`/tags/${tag.slug}`}
-              className="px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              className="group px-5 py-2.5 rounded-xl border border-border dark:border-border-dark bg-card dark:bg-card-dark hover:border-accent hover:shadow-sm transition-all duration-200"
             >
-              {tag.name}
-              <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
+              <span className="font-medium text-stone-700 dark:text-stone-300 group-hover:text-accent transition-colors">
+                {tag.name}
+              </span>
+              <span className="ml-2 text-sm text-muted dark:text-muted-dark tabular-nums">
                 {tag._count.posts}
               </span>
             </Link>

@@ -18,6 +18,12 @@ const statusLabels: Record<string, string> = {
   hidden: "隐藏",
 };
 
+const statusStyles: Record<string, string> = {
+  draft: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
+  published: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+  hidden: "bg-stone-500/10 text-stone-500",
+};
+
 export default function AdminPostsPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filter, setFilter] = useState("");
@@ -38,63 +44,73 @@ export default function AdminPostsPage() {
   }
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">文章管理</h1>
+    <div className="animate-fade-in">
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-50">文章管理</h1>
         <Link
           href="/admin/posts/new"
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 bg-accent text-white rounded-xl hover:bg-accent-dark transition-colors text-sm font-medium"
         >
-          新建文章
+          + 新建文章
         </Link>
       </div>
-      <div className="flex gap-2 mb-4">
+
+      <div className="flex gap-2 mb-6">
         {["", "draft", "published", "hidden"].map((s) => (
           <button
             key={s}
             onClick={() => setFilter(s)}
-            className={`px-3 py-1 rounded-md text-sm ${
+            className={`px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               filter === s
-                ? "bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900"
-                : "border border-gray-200 dark:border-gray-700"
+                ? "bg-accent text-white"
+                : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
             }`}
           >
             {s ? statusLabels[s] : "全部"}
           </button>
         ))}
       </div>
+
       {loading ? (
-        <p className="text-gray-500">加载中...</p>
+        <div className="py-12 text-center text-muted dark:text-muted-dark">加载中...</div>
       ) : posts.length === 0 ? (
-        <p className="text-gray-500">暂无文章</p>
+        <div className="py-12 text-center text-muted dark:text-muted-dark">暂无文章</div>
       ) : (
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-gray-200 dark:border-gray-800 text-left text-sm text-gray-500">
-              <th className="pb-2">标题</th>
-              <th className="pb-2">状态</th>
-              <th className="pb-2">创建时间</th>
-              <th className="pb-2">操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.map((post) => (
-              <tr key={post.id} className="border-b border-gray-100 dark:border-gray-800/50">
-                <td className="py-3">{post.title}</td>
-                <td className="py-3 text-sm">{statusLabels[post.status]}</td>
-                <td className="py-3 text-sm text-gray-500">{formatDate(post.createdAt)}</td>
-                <td className="py-3 text-sm space-x-3">
-                  <Link href={`/admin/posts/${post.id}/edit`} className="text-blue-600 hover:underline">
-                    编辑
-                  </Link>
-                  <button onClick={() => handleDelete(post.id)} className="text-red-600 hover:underline">
-                    删除
-                  </button>
-                </td>
+        <div className="rounded-2xl border border-border dark:border-border-dark bg-card dark:bg-card-dark overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border dark:border-border-dark text-left text-xs font-medium text-muted dark:text-muted-dark uppercase tracking-wider">
+                <th className="px-5 py-3">标题</th>
+                <th className="px-5 py-3">状态</th>
+                <th className="px-5 py-3 hidden sm:table-cell">创建时间</th>
+                <th className="px-5 py-3 text-right">操作</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {posts.map((post) => (
+                <tr key={post.id} className="border-b border-border/50 dark:border-border-dark/50 last:border-0 hover:bg-stone-50 dark:hover:bg-stone-800/30 transition-colors">
+                  <td className="px-5 py-4 font-medium text-stone-800 dark:text-stone-200">{post.title}</td>
+                  <td className="px-5 py-4">
+                    <span className={`inline-flex px-2 py-0.5 rounded-md text-xs font-medium ${statusStyles[post.status] || ""}`}>
+                      {statusLabels[post.status]}
+                    </span>
+                  </td>
+                  <td className="px-5 py-4 text-sm text-muted dark:text-muted-dark hidden sm:table-cell">{formatDate(post.createdAt)}</td>
+                  <td className="px-5 py-4 text-right">
+                    <div className="flex items-center justify-end gap-3 text-sm">
+                      <Link href={`/admin/posts/${post.id}/edit`} className="text-accent hover:text-accent-dark transition-colors">
+                        编辑
+                      </Link>
+                      <button onClick={() => handleDelete(post.id)} className="text-red-500 hover:text-red-600 transition-colors">
+                        删除
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

@@ -10,25 +10,35 @@ export function Pagination({ currentPage, totalPages, basePath = "" }: Paginatio
   if (totalPages <= 1) return null;
 
   return (
-    <nav className="mt-8 flex justify-center gap-2">
-      {currentPage > 1 && (
+    <nav className="mt-10 flex items-center justify-center gap-3">
+      {currentPage > 1 ? (
         <Link
           href={`${basePath}?page=${currentPage - 1}`}
-          className="px-4 py-2 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          className="px-4 py-2 text-sm font-medium rounded-lg border border-border dark:border-border-dark hover:bg-stone-50 dark:hover:bg-stone-800 hover:border-stone-300 dark:hover:border-stone-600 transition-all"
         >
-          上一页
+          &larr; 上一页
         </Link>
+      ) : (
+        <span className="px-4 py-2 text-sm text-muted/40 dark:text-muted-dark/40 cursor-not-allowed">
+          &larr; 上一页
+        </span>
       )}
-      <span className="px-4 py-2 text-gray-500 dark:text-gray-400">
+
+      <span className="px-3 py-1.5 text-sm font-medium text-muted dark:text-muted-dark tabular-nums">
         {currentPage} / {totalPages}
       </span>
-      {currentPage < totalPages && (
+
+      {currentPage < totalPages ? (
         <Link
           href={`${basePath}?page=${currentPage + 1}`}
-          className="px-4 py-2 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          className="px-4 py-2 text-sm font-medium rounded-lg border border-border dark:border-border-dark hover:bg-stone-50 dark:hover:bg-stone-800 hover:border-stone-300 dark:hover:border-stone-600 transition-all"
         >
-          下一页
+          下一页 &rarr;
         </Link>
+      ) : (
+        <span className="px-4 py-2 text-sm text-muted/40 dark:text-muted-dark/40 cursor-not-allowed">
+          下一页 &rarr;
+        </span>
       )}
     </nav>
   );

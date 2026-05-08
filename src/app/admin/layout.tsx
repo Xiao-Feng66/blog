@@ -11,9 +11,9 @@ export default async function AdminLayout({
   if (!admin) redirect("/admin/login");
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen bg-surface dark:bg-surface-dark">
       <Sidebar />
-      <div className="flex-1 p-8">{children}</div>
+      <div className="flex-1 p-6 md:p-10 overflow-auto">{children}</div>
     </div>
   );
 }

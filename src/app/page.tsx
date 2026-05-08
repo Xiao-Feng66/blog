@@ -29,22 +29,31 @@ export default async function Home({
   const totalPages = Math.ceil(total / POSTS_PER_PAGE);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">最新文章</h1>
+    <div className="mx-auto max-w-3xl px-6 py-16">
+      <header className="mb-12 animate-fade-in">
+        <h1 className="text-4xl font-bold tracking-tight text-stone-900 dark:text-stone-50">
+          最新文章
+        </h1>
+        <p className="mt-3 text-muted dark:text-muted-dark">
+          记录技术探索与思考
+        </p>
+      </header>
+
       {posts.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400">暂无文章</p>
+        <p className="text-muted dark:text-muted-dark py-12 text-center">暂无文章</p>
       ) : (
         <>
-          <div>
-            {posts.map((post) => (
-              <PostCard
-                key={post.id}
-                slug={post.slug}
-                title={post.title}
-                summary={post.summary}
-                createdAt={post.createdAt}
-                tags={post.tags.map((pt) => ({ name: pt.tag.name, slug: pt.tag.slug }))}
-              />
+          <div className="grid gap-4">
+            {posts.map((post, i) => (
+              <div key={post.id} className={`animate-fade-in stagger-${Math.min(i + 1, 5)}`}>
+                <PostCard
+                  slug={post.slug}
+                  title={post.title}
+                  summary={post.summary}
+                  createdAt={post.createdAt}
+                  tags={post.tags.map((pt) => ({ name: pt.tag.name, slug: pt.tag.slug }))}
+                />
+              </div>
             ))}
           </div>
           <Pagination currentPage={currentPage} totalPages={totalPages} />
