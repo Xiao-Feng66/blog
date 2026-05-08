@@ -19,9 +19,9 @@
 - [x] 标签列表页
 - [x] 按标签筛选文章页
 - [x] 关于页
-- [ ] 暗色/亮色模式切换（next-themes）
-- [ ] 响应式布局适配
-- [ ] SEO（sitemap、Open Graph meta）
+- [x] 暗色/亮色模式切换（next-themes）
+- [x] 响应式布局适配
+- [x] SEO（sitemap、Open Graph meta）
 
 ## Phase 3：管理后台
 
