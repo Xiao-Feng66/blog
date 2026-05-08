@@ -41,13 +41,14 @@ src/
 │   ├── ui/                     # 基础 UI 组件
 │   ├── blog/                   # 博客前台组件
 │   └── admin/                  # 后台组件
-├── lib/
-│   ├── db.ts                   # Prisma 客户端
-│   ├── supabase.ts             # Supabase 客户端
-│   ├── auth.ts                 # 认证工具
-│   └── mdx.ts                  # MDX 渲染
-└── styles/
-    └── globals.css             # Tailwind 全局样式
+└── lib/
+    ├── db.ts                   # Prisma 客户端
+    ├── supabase.ts             # Supabase 客户端（浏览器端）
+    ├── supabase-server.ts      # Supabase 客户端（服务端）
+    ├── auth.ts                 # 认证工具
+    ├── apiAuth.ts              # API 路由认证守卫
+    ├── mdx.ts                  # MDX 渲染
+    └── formatDate.ts           # 日期格式化
 ```
 
 ## 数据模型
