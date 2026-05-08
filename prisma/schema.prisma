@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Post {
+  id         String     @id @default(uuid()) @db.Uuid
+  title      String     @db.VarChar(200)
+  slug       String     @unique @db.VarChar(200)
+  content    String     @db.Text
+  summary    String     @db.VarChar(500)
+  coverImage String?    @map("cover_image") @db.VarChar(500)
+  status     PostStatus @default(draft)
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+  tags       PostTag[]
+
+  @@map("posts")
+}
+
+model Tag {
+  id    String    @id @default(uuid()) @db.Uuid
+  name  String    @unique @db.VarChar(50)
+  slug  String    @unique @db.VarChar(50)
+  posts PostTag[]
+
+  @@map("tags")
+}
+
+model PostTag {
+  postId String @map("post_id") @db.Uuid
+  tagId  String @map("tag_id") @db.Uuid
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map("post_tags")
+}
+
+enum PostStatus {
+  draft
+  published
+  hidden
+}
