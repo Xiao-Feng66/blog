@@ -9,7 +9,7 @@
 - [x] 定义数据库 schema 并执行首次迁移
 - [x] 配置 Supabase Auth（GitHub OAuth）
 - [x] 创建 .env.example，说明所需环境变量
-- [ ] 配置 ESLint
+- [x] 配置 ESLint
 
 ## Phase 2：博客前台
 
