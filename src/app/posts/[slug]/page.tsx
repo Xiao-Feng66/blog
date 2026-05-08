@@ -3,6 +3,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { renderMDX } from "@/lib/mdx";
 import { formatDate } from "@/lib/formatDate";
+import { Comments } from "@/components/blog/Comments";
 import type { Metadata } from "next";
 
 interface Props {
@@ -52,6 +53,7 @@ export default async function PostPage({ params }: Props) {
         </div>
       </header>
       <div className="prose dark:prose-invert max-w-none">{content}</div>
+      <Comments />
     </article>
   );
 }

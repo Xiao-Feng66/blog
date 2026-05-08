@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { Search } from "@/components/blog/Search";
 
 const navLinks = [
   { href: "/", label: "首页" },
@@ -24,6 +25,7 @@ export function Header() {
               {link.label}
             </Link>
           ))}
+          <Search />
           <ThemeToggle />
         </nav>
       </div>
