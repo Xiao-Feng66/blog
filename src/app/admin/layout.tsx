@@ -8,7 +8,7 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const admin = await isAdmin();
-  if (!admin) redirect("/admin/login");
+  if (!admin) redirect("/login");
 
   return (
     <div className="flex min-h-screen bg-surface dark:bg-surface-dark">
