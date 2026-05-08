@@ -1,13 +1,22 @@
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 
 export const dynamic = "force-dynamic";
 
 export default async function AdminDashboard() {
-  const [totalPosts, publishedPosts, draftPosts] = await Promise.all([
-    prisma.post.count(),
-    prisma.post.count({ where: { status: "published" } }),
-    prisma.post.count({ where: { status: "draft" } }),
-  ]);
+  let totalPosts, publishedPosts, draftPosts;
+  if (useMock) {
+    const stats = mockDb.getDashboardStats();
+    totalPosts = stats.total;
+    publishedPosts = stats.published;
+    draftPosts = stats.draft;
+  } else {
+    [totalPosts, publishedPosts, draftPosts] = await Promise.all([
+      prisma.post.count(),
+      prisma.post.count({ where: { status: "published" } }),
+      prisma.post.count({ where: { status: "draft" } }),
+    ]);
+  }
 
   const stats = [
     { label: "总文章数", value: totalPosts },

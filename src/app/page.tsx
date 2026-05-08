@@ -1,4 +1,5 @@
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 import { PostCard } from "@/components/blog/PostCard";
 import { Pagination } from "@/components/blog/Pagination";
 
@@ -12,16 +13,18 @@ export default async function Home({
   const { page } = await searchParams;
   const currentPage = Math.max(1, Number(page) || 1);
 
-  const [posts, total] = await Promise.all([
-    prisma.post.findMany({
-      where: { status: "published" },
-      orderBy: { createdAt: "desc" },
-      skip: (currentPage - 1) * POSTS_PER_PAGE,
-      take: POSTS_PER_PAGE,
-      include: { tags: { include: { tag: true } } },
-    }),
-    prisma.post.count({ where: { status: "published" } }),
-  ]);
+  const [posts, total] = useMock
+    ? [mockDb.getPublishedPosts(currentPage, POSTS_PER_PAGE), mockDb.getPublishedPostCount()]
+    : await Promise.all([
+        prisma.post.findMany({
+          where: { status: "published" },
+          orderBy: { createdAt: "desc" },
+          skip: (currentPage - 1) * POSTS_PER_PAGE,
+          take: POSTS_PER_PAGE,
+          include: { tags: { include: { tag: true } } },
+        }),
+        prisma.post.count({ where: { status: "published" } }),
+      ]);
 
   const totalPages = Math.ceil(total / POSTS_PER_PAGE);
 

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -9,10 +10,12 @@ export const metadata: Metadata = {
 };
 
 export default async function TagsPage() {
-  const tags = await prisma.tag.findMany({
-    include: { _count: { select: { posts: true } } },
-    orderBy: { name: "asc" },
-  });
+  const tags = useMock
+    ? mockDb.getAllTags()
+    : await prisma.tag.findMany({
+        include: { _count: { select: { posts: true } } },
+        orderBy: { name: "asc" },
+      });
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">

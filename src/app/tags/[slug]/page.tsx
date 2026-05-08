@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 import { PostCard } from "@/components/blog/PostCard";
 import { Pagination } from "@/components/blog/Pagination";
 import type { Metadata } from "next";
@@ -13,7 +14,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const tag = await prisma.tag.findUnique({ where: { slug } });
+  const tag = useMock
+    ? mockDb.getTagBySlug(slug)
+    : await prisma.tag.findUnique({ where: { slug } });
   if (!tag) return {};
   return { title: `标签: ${tag.name}` };
 }
@@ -23,21 +26,30 @@ export default async function TagPage({ params, searchParams }: Props) {
   const { page } = await searchParams;
   const currentPage = Math.max(1, Number(page) || 1);
 
-  const tag = await prisma.tag.findUnique({ where: { slug } });
+  const tag = useMock
+    ? mockDb.getTagBySlug(slug)
+    : await prisma.tag.findUnique({ where: { slug } });
   if (!tag) notFound();
 
-  const [postTags, total] = await Promise.all([
-    prisma.postTag.findMany({
-      where: { tagId: tag.id, post: { status: "published" } },
-      include: { post: { include: { tags: { include: { tag: true } } } } },
-      orderBy: { post: { createdAt: "desc" } },
-      skip: (currentPage - 1) * POSTS_PER_PAGE,
-      take: POSTS_PER_PAGE,
-    }),
-    prisma.postTag.count({
-      where: { tagId: tag.id, post: { status: "published" } },
-    }),
-  ]);
+  let postTags, total;
+  if (useMock) {
+    const result = mockDb.getPostsByTag(tag.id, currentPage, POSTS_PER_PAGE);
+    postTags = result.items;
+    total = result.total;
+  } else {
+    [postTags, total] = await Promise.all([
+      prisma.postTag.findMany({
+        where: { tagId: tag.id, post: { status: "published" } },
+        include: { post: { include: { tags: { include: { tag: true } } } } },
+        orderBy: { post: { createdAt: "desc" } },
+        skip: (currentPage - 1) * POSTS_PER_PAGE,
+        take: POSTS_PER_PAGE,
+      }),
+      prisma.postTag.count({
+        where: { tagId: tag.id, post: { status: "published" } },
+      }),
+    ]);
+  }
 
   const totalPages = Math.ceil(total / POSTS_PER_PAGE);
 

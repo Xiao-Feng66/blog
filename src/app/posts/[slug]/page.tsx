@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 import { renderMDX } from "@/lib/mdx";
 import { formatDate } from "@/lib/formatDate";
 import { Comments } from "@/components/blog/Comments";
@@ -12,7 +13,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const post = await prisma.post.findUnique({ where: { slug } });
+  const post = useMock
+    ? mockDb.getPostMetaBySlug(slug)
+    : await prisma.post.findUnique({ where: { slug } });
   if (!post) return {};
   return {
     title: post.title,
@@ -22,10 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function PostPage({ params }: Props) {
   const { slug } = await params;
-  const post = await prisma.post.findUnique({
-    where: { slug, status: "published" },
-    include: { tags: { include: { tag: true } } },
-  });
+  const post = useMock
+    ? mockDb.getPostBySlug(slug)
+    : await prisma.post.findUnique({
+        where: { slug, status: "published" },
+        include: { tags: { include: { tag: true } } },
+      });
 
   if (!post) notFound();
 
