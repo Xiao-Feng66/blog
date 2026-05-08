@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
@@ -9,27 +10,34 @@ export const metadata: Metadata = {
 };
 
 export default async function TagsPage() {
-  const tags = await prisma.tag.findMany({
-    include: { _count: { select: { posts: true } } },
-    orderBy: { name: "asc" },
-  });
+  const tags = useMock
+    ? mockDb.getAllTags()
+    : await prisma.tag.findMany({
+        include: { _count: { select: { posts: true } } },
+        orderBy: { name: "asc" },
+      });
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">标签</h1>
+    <div className="mx-auto max-w-6xl px-8 py-20">
+      <header className="mb-16 animate-fade-in">
+        <h1 className="text-xl font-light tracking-wide text-ink dark:text-ink-dark">标签</h1>
+      </header>
+
       {tags.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400">暂无标签</p>
+        <p className="text-muted dark:text-muted-dark py-16 text-center text-sm">暂无标签</p>
       ) : (
-        <div className="flex flex-wrap gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 animate-fade-in stagger-1">
           {tags.map((tag) => (
             <Link
               key={tag.id}
               href={`/tags/${tag.slug}`}
-              className="px-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              className="group flex items-center justify-between px-5 py-4 rounded-lg border border-border dark:border-border-dark hover:border-ink/20 dark:hover:border-ink-dark/20 bg-white/50 dark:bg-white/[0.03] transition-all duration-300"
             >
-              {tag.name}
-              <span className="ml-2 text-sm text-gray-500 dark:text-gray-400">
-                {tag._count.posts}
+              <span className="text-sm text-ink dark:text-ink-dark group-hover:text-ink/70 dark:group-hover:text-ink-dark/70 transition-colors duration-300">
+                {tag.name}
+              </span>
+              <span className="text-xs text-muted dark:text-muted-dark tabular-nums">
+                {tag._count.posts} 篇
               </span>
             </Link>
           ))}

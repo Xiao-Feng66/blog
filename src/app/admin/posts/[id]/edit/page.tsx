@@ -18,11 +18,11 @@ export default function EditPostPage() {
       });
   }, [id]);
 
-  if (loading) return <p className="text-gray-500">加载中...</p>;
+  if (loading) return <div className="py-12 text-center text-muted dark:text-muted-dark">加载中...</div>;
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">编辑文章</h1>
+    <div className="animate-fade-in">
+      <h1 className="text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-50 mb-8">编辑文章</h1>
       <PostForm initialData={post!} />
     </div>
   );

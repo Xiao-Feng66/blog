@@ -60,9 +60,10 @@ export default function AdminTagsPage() {
   }
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">标签管理</h1>
-      <form onSubmit={handleSubmit} className="flex gap-3 mb-6">
+    <div className="animate-fade-in">
+      <h1 className="text-2xl font-bold tracking-tight text-stone-900 dark:text-stone-50 mb-8">标签管理</h1>
+
+      <form onSubmit={handleSubmit} className="flex flex-wrap gap-3 mb-8">
         <input
           type="text"
           placeholder="标签名"
@@ -72,7 +73,7 @@ export default function AdminTagsPage() {
             if (!editingId) setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9]+/g, "-"));
           }}
           required
-          className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-md bg-transparent"
+          className="px-4 py-2 rounded-xl border border-border dark:border-border-dark bg-transparent text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
         />
         <input
           type="text"
@@ -80,11 +81,11 @@ export default function AdminTagsPage() {
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
           required
-          className="px-3 py-2 border border-gray-200 dark:border-gray-700 rounded-md bg-transparent"
+          className="px-4 py-2 rounded-xl border border-border dark:border-border-dark bg-transparent text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
         />
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="px-5 py-2 bg-accent text-white rounded-xl hover:bg-accent-dark transition-colors text-sm font-medium"
         >
           {editingId ? "更新" : "添加"}
         </button>
@@ -92,44 +93,49 @@ export default function AdminTagsPage() {
           <button
             type="button"
             onClick={() => { setEditingId(null); setName(""); setSlug(""); }}
-            className="px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-md"
+            className="px-5 py-2 rounded-xl border border-border dark:border-border-dark text-sm hover:bg-stone-50 dark:hover:bg-stone-800 transition-colors"
           >
             取消
           </button>
         )}
       </form>
+
       {loading ? (
-        <p className="text-gray-500">加载中...</p>
+        <div className="py-12 text-center text-muted dark:text-muted-dark">加载中...</div>
       ) : tags.length === 0 ? (
-        <p className="text-gray-500">暂无标签</p>
+        <div className="py-12 text-center text-muted dark:text-muted-dark">暂无标签</div>
       ) : (
-        <table className="w-full">
-          <thead>
-            <tr className="border-b border-gray-200 dark:border-gray-800 text-left text-sm text-gray-500">
-              <th className="pb-2">名称</th>
-              <th className="pb-2">Slug</th>
-              <th className="pb-2">文章数</th>
-              <th className="pb-2">操作</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tags.map((tag) => (
-              <tr key={tag.id} className="border-b border-gray-100 dark:border-gray-800/50">
-                <td className="py-3">{tag.name}</td>
-                <td className="py-3 text-sm text-gray-500">{tag.slug}</td>
-                <td className="py-3 text-sm">{tag._count.posts}</td>
-                <td className="py-3 text-sm space-x-3">
-                  <button onClick={() => handleEdit(tag)} className="text-blue-600 hover:underline">
-                    编辑
-                  </button>
-                  <button onClick={() => handleDelete(tag.id)} className="text-red-600 hover:underline">
-                    删除
-                  </button>
-                </td>
+        <div className="rounded-2xl border border-border dark:border-border-dark bg-card dark:bg-card-dark overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border dark:border-border-dark text-left text-xs font-medium text-muted dark:text-muted-dark uppercase tracking-wider">
+                <th className="px-5 py-3">名称</th>
+                <th className="px-5 py-3">Slug</th>
+                <th className="px-5 py-3">文章数</th>
+                <th className="px-5 py-3 text-right">操作</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {tags.map((tag) => (
+                <tr key={tag.id} className="border-b border-border/50 dark:border-border-dark/50 last:border-0 hover:bg-stone-50 dark:hover:bg-stone-800/30 transition-colors">
+                  <td className="px-5 py-4 font-medium text-stone-800 dark:text-stone-200">{tag.name}</td>
+                  <td className="px-5 py-4 text-sm text-muted dark:text-muted-dark font-mono">{tag.slug}</td>
+                  <td className="px-5 py-4 text-sm tabular-nums">{tag._count.posts}</td>
+                  <td className="px-5 py-4 text-right">
+                    <div className="flex items-center justify-end gap-3 text-sm">
+                      <button onClick={() => handleEdit(tag)} className="text-accent hover:text-accent-dark transition-colors">
+                        编辑
+                      </button>
+                      <button onClick={() => handleDelete(tag.id)} className="text-red-500 hover:text-red-600 transition-colors">
+                        删除
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );

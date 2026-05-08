@@ -1,12 +1,15 @@
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 import { requireAdmin } from "@/lib/apiAuth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
-  const tags = await prisma.tag.findMany({
-    include: { _count: { select: { posts: true } } },
-    orderBy: { name: "asc" },
-  });
+  const tags = useMock
+    ? mockDb.getAllTags()
+    : await prisma.tag.findMany({
+        include: { _count: { select: { posts: true } } },
+        orderBy: { name: "asc" },
+      });
   return NextResponse.json(tags);
 }
 

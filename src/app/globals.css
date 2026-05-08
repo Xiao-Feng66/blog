@@ -1,8 +1,121 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@theme {
+  --color-surface: #f7f5f2;
+  --color-surface-dark: #141210;
+  --color-ink: #2c2825;
+  --color-ink-dark: #e0ddd8;
+  --color-muted: #9c968e;
+  --color-muted-dark: #6b665f;
+  --color-border: #e8e5e0;
+  --color-border-dark: #2a2724;
+  --color-accent: #0d9488;
+  --color-accent-light: #14b8a6;
+  --color-accent-dark: #0f766e;
+  --color-card: #ffffff;
+  --color-card-dark: #1c1917;
+}
+
+::selection {
+  background-color: #292524;
+  color: #fafaf9;
+}
+
+html.dark ::selection {
+  background-color: #d6d3d1;
+  color: #1c1917;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* -- Prose -- */
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.2s ease;
+}
+
+.prose :where(a):hover:not(:where([class~="not-prose"] *)) {
+  text-decoration-color: currentColor;
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  font-family: var(--font-geist-mono);
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+}
+
+html.dark .prose :where(pre):not(:where([class~="not-prose"] *)) {
+  border-color: var(--color-border-dark);
+}
+
+/* -- Shiki dark mode -- */
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
+}
+
+/* -- Animations -- */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(5px); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.7s ease both;
+}
+
+.animate-float {
+  animation: gentle-float 2.5s ease-in-out infinite;
+}
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* -- Scrollbar -- */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-border-dark);
 }

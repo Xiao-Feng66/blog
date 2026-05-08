@@ -1,4 +1,5 @@
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 import { requireAdmin } from "@/lib/apiAuth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,10 +9,12 @@ interface Context {
 
 export async function GET(_request: NextRequest, context: Context) {
   const { id } = await context.params;
-  const post = await prisma.post.findUnique({
-    where: { id },
-    include: { tags: { include: { tag: true } } },
-  });
+  const post = useMock
+    ? mockDb.getPostById(id)
+    : await prisma.post.findUnique({
+        where: { id },
+        include: { tags: { include: { tag: true } } },
+      });
 
   if (!post) return NextResponse.json({ error: "Not found" }, { status: 404 });
   return NextResponse.json(post);

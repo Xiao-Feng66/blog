@@ -1,4 +1,5 @@
-import { prisma } from "@/lib/db";
+import { prisma, useMock } from "@/lib/db";
+import { mockDb } from "@/lib/mockData";
 import { requireAdmin } from "@/lib/apiAuth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,6 +9,11 @@ export async function GET(request: NextRequest) {
   const status = searchParams.get("status");
   const tag = searchParams.get("tag");
   const limit = 20;
+
+  if (useMock) {
+    const result = mockDb.getPostsForApi({ status: status ?? undefined, tag: tag ?? undefined, page, pageSize: limit });
+    return NextResponse.json({ posts: result.posts, total: result.total, page, totalPages: Math.ceil(result.total / limit) });
+  }
 
   const where: Record<string, unknown> = {};
   if (status) where.status = status;

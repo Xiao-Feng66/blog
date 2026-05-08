@@ -10,25 +10,35 @@ export function Pagination({ currentPage, totalPages, basePath = "" }: Paginatio
   if (totalPages <= 1) return null;
 
   return (
-    <nav className="mt-8 flex justify-center gap-2">
-      {currentPage > 1 && (
+    <nav className="mt-16 flex items-center justify-center gap-8 text-sm">
+      {currentPage > 1 ? (
         <Link
           href={`${basePath}?page=${currentPage - 1}`}
-          className="px-4 py-2 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          className="text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors duration-300"
         >
-          上一页
+          &larr; 上一页
         </Link>
+      ) : (
+        <span className="text-border dark:text-border-dark cursor-default">
+          &larr; 上一页
+        </span>
       )}
-      <span className="px-4 py-2 text-gray-500 dark:text-gray-400">
+
+      <span className="text-xs text-muted dark:text-muted-dark tabular-nums tracking-wider">
         {currentPage} / {totalPages}
       </span>
-      {currentPage < totalPages && (
+
+      {currentPage < totalPages ? (
         <Link
           href={`${basePath}?page=${currentPage + 1}`}
-          className="px-4 py-2 rounded-md border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+          className="text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors duration-300"
         >
-          下一页
+          下一页 &rarr;
         </Link>
+      ) : (
+        <span className="text-border dark:text-border-dark cursor-default">
+          下一页 &rarr;
+        </span>
       )}
     </nav>
   );

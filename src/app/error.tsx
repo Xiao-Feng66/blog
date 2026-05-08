@@ -7,12 +7,11 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 text-center">
-      <h2 className="text-2xl font-bold mb-4">出错了</h2>
-      <p className="text-gray-500 dark:text-gray-400 mb-6">页面加载时发生错误</p>
+    <div className="mx-auto max-w-2xl px-6 py-32 text-center animate-fade-in">
+      <p className="text-sm text-muted dark:text-muted-dark mb-10">页面加载时发生错误</p>
       <button
         onClick={reset}
-        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        className="text-sm text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors duration-300 underline underline-offset-4 decoration-border dark:decoration-border-dark hover:decoration-current"
       >
         重试
       </button>
