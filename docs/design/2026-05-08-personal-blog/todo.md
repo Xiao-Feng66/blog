@@ -4,7 +4,7 @@
 
 ## Phase 1：项目脚手架
 
-- [ ] 初始化 Next.js 项目（TypeScript + Tailwind CSS）
+- [x] 初始化 Next.js 项目（TypeScript + Tailwind CSS）
 - [ ] 配置 Prisma + Supabase PostgreSQL 连接
 - [ ] 定义数据库 schema 并执行首次迁移
 - [ ] 配置 Supabase Auth（GitHub OAuth）
