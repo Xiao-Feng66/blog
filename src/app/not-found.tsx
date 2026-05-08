@@ -2,13 +2,12 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-24 text-center animate-fade-in">
-      <div className="text-6xl font-bold text-accent mb-4">404</div>
-      <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-50 mb-3">页面不存在</h2>
-      <p className="text-muted dark:text-muted-dark mb-8">你访问的页面找不到了</p>
+    <div className="mx-auto max-w-2xl px-6 py-32 text-center animate-fade-in">
+      <div className="text-6xl font-light text-border dark:text-border-dark mb-6">404</div>
+      <p className="text-sm text-muted dark:text-muted-dark mb-10">页面不存在</p>
       <Link
         href="/"
-        className="inline-flex px-5 py-2.5 bg-accent text-white rounded-xl hover:bg-accent-dark transition-colors text-sm font-medium"
+        className="text-sm text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors duration-300 underline underline-offset-4 decoration-border dark:decoration-border-dark hover:decoration-current"
       >
         返回首页
       </Link>

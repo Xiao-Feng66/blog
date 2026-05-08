@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma, useMock } from "@/lib/db";
 import { mockDb } from "@/lib/mockData";
@@ -54,23 +55,23 @@ export default async function TagPage({ params, searchParams }: Props) {
   const totalPages = Math.ceil(total / POSTS_PER_PAGE);
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <header className="mb-12 animate-fade-in">
-        <div className="flex items-center gap-2 text-sm text-muted dark:text-muted-dark mb-3">
-          <Link href="/tags" className="hover:text-accent transition-colors">标签</Link>
+    <div className="mx-auto max-w-2xl px-6 py-20">
+      <header className="mb-16 animate-fade-in">
+        <div className="flex items-center gap-2 text-xs text-muted dark:text-muted-dark mb-4">
+          <Link href="/tags" className="hover:text-ink dark:hover:text-ink-dark transition-colors duration-300">标签</Link>
           <span>/</span>
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-stone-900 dark:text-stone-50">{tag.name}</h1>
-        <p className="mt-3 text-muted dark:text-muted-dark">共 {total} 篇文章</p>
+        <h1 className="text-xl font-light tracking-wide text-ink dark:text-ink-dark">{tag.name}</h1>
+        <p className="mt-2 text-xs text-muted dark:text-muted-dark">{total} 篇</p>
       </header>
 
       {postTags.length === 0 ? (
-        <p className="text-muted dark:text-muted-dark py-12 text-center">暂无文章</p>
+        <p className="text-muted dark:text-muted-dark py-16 text-center text-sm">暂无文章</p>
       ) : (
         <>
-          <div className="grid gap-4">
+          <div className="divide-y divide-border dark:divide-border-dark">
             {postTags.map((pt, i) => (
-              <div key={pt.post.id} className={`animate-fade-in stagger-${Math.min(i + 1, 5)}`}>
+              <div key={pt.post.id} className={`animate-slide-up stagger-${Math.min(i + 1, 5)}`}>
                 <PostCard
                   slug={pt.post.slug}
                   title={pt.post.title}

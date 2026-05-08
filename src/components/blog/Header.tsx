@@ -5,27 +5,28 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const navLinks = [
   { href: "/", label: "首页" },
+  { href: "/posts", label: "文章" },
   { href: "/tags", label: "标签" },
   { href: "/about", label: "关于" },
 ];
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 bg-white/80 dark:bg-surface-dark/80 backdrop-blur-lg border-b border-border dark:border-border-dark transition-colors">
-      <div className="mx-auto max-w-3xl px-6 h-16 flex items-center justify-between relative">
+    <header className="sticky top-0 z-40 bg-surface/70 dark:bg-surface-dark/70 backdrop-blur-md transition-colors duration-500">
+      <div className="mx-auto max-w-6xl px-8 h-14 flex items-center justify-between">
         <Link
           href="/"
-          className="text-lg font-bold tracking-tight text-stone-900 dark:text-stone-50 hover:text-accent transition-colors"
+          className="text-sm font-medium tracking-wide text-ink dark:text-ink-dark hover:text-muted dark:hover:text-muted-dark transition-colors duration-300"
         >
-          Blog<span className="text-accent">.</span>
+          Blog
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="px-3 py-1.5 rounded-lg text-sm font-medium text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
+              className="text-sm text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors duration-300"
             >
               {link.label}
             </Link>

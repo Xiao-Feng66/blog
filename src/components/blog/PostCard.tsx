@@ -9,38 +9,28 @@ interface PostCardProps {
   tags: { name: string; slug: string }[];
 }
 
-export function PostCard({ slug, title, summary, createdAt, tags }: PostCardProps) {
+export function PostCard({ slug, title, summary, createdAt }: PostCardProps) {
   return (
-    <article className="group relative rounded-xl border border-border dark:border-border-dark bg-card dark:bg-card-dark p-6 transition-all duration-200 hover:shadow-md hover:border-stone-300 dark:hover:border-stone-600 hover:-translate-y-0.5">
-      <Link href={`/posts/${slug}`} className="absolute inset-0 rounded-xl" aria-hidden="true" />
-
-      <div className="flex items-center gap-2 text-sm text-muted dark:text-muted-dark mb-3">
-        <time dateTime={new Date(createdAt).toISOString()}>{formatDate(createdAt)}</time>
-        {tags.length > 0 && (
-          <>
-            <span className="text-border dark:text-border-dark">&middot;</span>
-            <div className="flex gap-1.5">
-              {tags.map((tag) => (
-                <Link
-                  key={tag.slug}
-                  href={`/tags/${tag.slug}`}
-                  className="relative z-10 text-accent hover:text-accent-dark dark:hover:text-accent-light transition-colors"
-                >
-                  #{tag.name}
-                </Link>
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-
-      <h2 className="text-lg font-semibold text-stone-900 dark:text-stone-50 group-hover:text-accent transition-colors leading-snug">
-        {title}
-      </h2>
-
-      <p className="mt-2 text-sm text-muted dark:text-muted-dark line-clamp-2 leading-relaxed">
-        {summary}
-      </p>
+    <article className="py-7">
+      <Link
+        href={`/posts/${slug}`}
+        className="flex items-baseline justify-between gap-6 group"
+      >
+        <div className="min-w-0 flex-1">
+          <h2 className="text-base font-normal text-ink dark:text-ink-dark group-hover:text-muted dark:group-hover:text-muted-dark transition-colors duration-300 leading-relaxed">
+            {title}
+          </h2>
+          <p className="mt-1.5 text-sm text-muted dark:text-muted-dark line-clamp-1 leading-relaxed">
+            {summary}
+          </p>
+        </div>
+        <time
+          dateTime={new Date(createdAt).toISOString()}
+          className="shrink-0 text-xs text-muted dark:text-muted-dark tabular-nums whitespace-nowrap"
+        >
+          {formatDate(createdAt)}
+        </time>
+      </Link>
     </article>
   );
 }

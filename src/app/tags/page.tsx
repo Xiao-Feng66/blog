@@ -18,27 +18,26 @@ export default async function TagsPage() {
       });
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <header className="mb-12 animate-fade-in">
-        <h1 className="text-4xl font-bold tracking-tight text-stone-900 dark:text-stone-50">标签</h1>
-        <p className="mt-3 text-muted dark:text-muted-dark">按主题浏览文章</p>
+    <div className="mx-auto max-w-6xl px-8 py-20">
+      <header className="mb-16 animate-fade-in">
+        <h1 className="text-xl font-light tracking-wide text-ink dark:text-ink-dark">标签</h1>
       </header>
 
       {tags.length === 0 ? (
-        <p className="text-muted dark:text-muted-dark py-12 text-center">暂无标签</p>
+        <p className="text-muted dark:text-muted-dark py-16 text-center text-sm">暂无标签</p>
       ) : (
-        <div className="flex flex-wrap gap-3 animate-fade-in stagger-1">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 animate-fade-in stagger-1">
           {tags.map((tag) => (
             <Link
               key={tag.id}
               href={`/tags/${tag.slug}`}
-              className="group px-5 py-2.5 rounded-xl border border-border dark:border-border-dark bg-card dark:bg-card-dark hover:border-accent hover:shadow-sm transition-all duration-200"
+              className="group flex items-center justify-between px-5 py-4 rounded-lg border border-border dark:border-border-dark hover:border-ink/20 dark:hover:border-ink-dark/20 bg-white/50 dark:bg-white/[0.03] transition-all duration-300"
             >
-              <span className="font-medium text-stone-700 dark:text-stone-300 group-hover:text-accent transition-colors">
+              <span className="text-sm text-ink dark:text-ink-dark group-hover:text-ink/70 dark:group-hover:text-ink-dark/70 transition-colors duration-300">
                 {tag.name}
               </span>
-              <span className="ml-2 text-sm text-muted dark:text-muted-dark tabular-nums">
-                {tag._count.posts}
+              <span className="text-xs text-muted dark:text-muted-dark tabular-nums">
+                {tag._count.posts} 篇
               </span>
             </Link>
           ))}

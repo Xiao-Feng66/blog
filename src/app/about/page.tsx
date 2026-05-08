@@ -6,12 +6,12 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <header className="mb-12 animate-fade-in">
-        <h1 className="text-4xl font-bold tracking-tight text-stone-900 dark:text-stone-50">关于</h1>
+    <div className="mx-auto max-w-2xl px-6 py-20">
+      <header className="mb-16 animate-fade-in">
+        <h1 className="text-xl font-light tracking-wide text-ink dark:text-ink-dark">关于</h1>
       </header>
 
-      <div className="prose dark:prose-invert prose-stone max-w-none animate-fade-in stagger-1">
+      <div className="prose dark:prose-invert prose-stone max-w-none prose-p:leading-[1.85] prose-headings:font-light animate-fade-in stagger-1">
         <p>
           你好，欢迎来到我的博客。
         </p>
