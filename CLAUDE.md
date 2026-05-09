@@ -85,7 +85,7 @@ docs/
 ├── changelog.md                        # 变更日志（语义化，记录为什么改）
 ├── lessons.md                          # 经验教训（被纠正后更新）
 ├── design/YYYY-MM-DD-topic/            # 设计方案目录
-│   ├── design.md                       # 技术方案（source of truth）
+│   ├── 技术方案.md                      # 技术方案（source of truth）
 │   └── todo.md                         # 任务清单（可勾选条目）
 └── workflow.md                         # 开发工作流
 ```
