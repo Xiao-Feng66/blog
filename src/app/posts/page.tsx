@@ -36,7 +36,7 @@ export default async function PostsPage({
   return (
     <div className="mx-auto max-w-4xl px-6 py-20">
       <header className="mb-16 animate-fade-in">
-        <h1 className="text-xl font-light tracking-wide text-ink dark:text-ink-dark">文章</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-ink dark:text-ink-dark">文章</h1>
       </header>
 
       {posts.length === 0 ? (

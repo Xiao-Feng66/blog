@@ -20,7 +20,7 @@ export default async function TagsPage() {
   return (
     <div className="mx-auto max-w-6xl px-8 py-20">
       <header className="mb-16 animate-fade-in">
-        <h1 className="text-xl font-light tracking-wide text-ink dark:text-ink-dark">标签</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-ink dark:text-ink-dark">标签</h1>
       </header>
 
       {tags.length === 0 ? (
