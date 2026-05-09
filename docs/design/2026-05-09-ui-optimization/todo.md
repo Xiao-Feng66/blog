@@ -15,6 +15,6 @@
 - [x] 管理后台侧边栏文字颜色加深
 - [x] TOC 布局改为 absolute + h-full 定位，文章居中，sticky 生效
 - [x] TOC 锚点跳转修复（从 DOM 读取真实 ID）
-- [x] 代码块文字颜色修复（prose 对 pre/code 设了浅色文字覆盖 Shiki，添加 CSS reset）
+- [x] 代码块文字颜色修复（prose 的 `--tw-prose-pre-code` 覆盖 Shiki，用 `!important` 强制 `var(--shiki-light)`）
 - [x] 锚点跳转标题被导航栏遮挡（添加 scroll-margin-top: 5rem）
-- [x] 回到顶部按钮集成到 TOC 下方
+- [x] 回到顶部按钮改为右下角固定圆形图标按钮（独立 ScrollToTop 组件）
