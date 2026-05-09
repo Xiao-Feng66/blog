@@ -36,7 +36,8 @@ Step 5: 开发循环（按 todo 逐项执行）
   ▼
 Step 6: 功能收尾
   │  1. CLAUDE.md 一致性检查（项目结构、数据模型等是否与代码一致，过时则更新）
-  │  2. changelog.md 追加一条记录（需求/功能维度）
+  │  2. `docs/architecture/` 一致性检查（新增路由、改 schema、新增组件等，过时则更新）
+  │  3. changelog.md 追加一条记录（需求/功能维度）
   │
   ▼
 Step 7: 提交 PR
