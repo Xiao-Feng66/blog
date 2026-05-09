@@ -68,6 +68,7 @@ npx prisma generate     # 生成 Prisma 客户端类型
 - 服务端组件为默认，需要交互的组件才加 `"use client"`
 - 环境变量：公开的用 `NEXT_PUBLIC_` 前缀，私有的不加
 - 文档文件名使用英文，内容使用中文
+- **每个需求合入 main 前必须更新 `docs/changelog.md`**，按 `docs/workflow.md` 规范格式记录
 
 ## 文档目录结构
 

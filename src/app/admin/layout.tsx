@@ -1,15 +1,10 @@
-import { redirect } from "next/navigation";
-import { isAdmin } from "@/lib/auth";
 import { Sidebar } from "@/components/admin/Sidebar";
 
-export default async function AdminLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const admin = await isAdmin();
-  if (!admin) redirect("/login");
-
   return (
     <div className="flex min-h-screen bg-surface dark:bg-surface-dark">
       <Sidebar />
