@@ -5,9 +5,9 @@
 @theme {
   --color-surface: #f7f5f2;
   --color-surface-dark: #141210;
-  --color-ink: #2c2825;
+  --color-ink: #0c0a09;
   --color-ink-dark: #e0ddd8;
-  --color-muted: #78736b;
+  --color-muted: #44403c;
   --color-muted-dark: #6b665f;
   --color-border: #b5b0a6;
   --color-border-dark: #2a2724;
@@ -68,10 +68,13 @@ html.dark .prose :where(pre):not(:where([class~="not-prose"] *)) {
 }
 
 /* -- Shiki dual-theme: defaultColor:false 后所有颜色都通过 CSS 变量输出 -- */
-.shiki,
+.shiki {
+  color: var(--shiki-light) !important;
+}
+
 .shiki span {
   color: var(--shiki-light) !important;
-  background-color: var(--shiki-light-bg) !important;
+  background-color: transparent !important;
 }
 
 html.dark .shiki,

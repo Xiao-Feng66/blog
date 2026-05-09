@@ -61,7 +61,7 @@ export default async function TagPage({ params, searchParams }: Props) {
           <Link href="/tags" className="hover:text-ink dark:hover:text-ink-dark transition-colors duration-300">标签</Link>
           <span>/</span>
         </div>
-        <h1 className="text-xl font-light tracking-wide text-ink dark:text-ink-dark">{tag.name}</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-ink dark:text-ink-dark">{tag.name}</h1>
         <p className="mt-2 text-xs text-muted dark:text-muted-dark">{total} 篇</p>
       </header>
 

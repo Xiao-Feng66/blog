@@ -79,7 +79,7 @@ export function TableOfContents() {
   if (headings.length === 0) return null;
 
   return (
-    <nav className="hidden xl:block absolute right-full mr-10 w-52 top-0 h-full">
+    <nav className="hidden xl:block absolute right-full mr-10 w-64 top-0 h-full">
       <div className="sticky top-24">
         <p className="text-xs font-medium text-muted dark:text-muted-dark uppercase tracking-wider mb-3">
           目录
