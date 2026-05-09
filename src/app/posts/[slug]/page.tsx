@@ -9,6 +9,17 @@ import { TableOfContents } from "@/components/blog/TableOfContents";
 import { ScrollToTop } from "@/components/blog/ScrollToTop";
 import type { Metadata } from "next";
 
+export const revalidate = 86400;
+
+export async function generateStaticParams() {
+  if (useMock) return [];
+  const posts = await prisma.post.findMany({
+    where: { status: "published" },
+    select: { slug: true },
+  });
+  return posts.map((p) => ({ slug: p.slug }));
+}
+
 interface Props {
   params: Promise<{ slug: string }>;
 }

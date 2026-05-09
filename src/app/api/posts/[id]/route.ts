@@ -1,6 +1,7 @@
 import { prisma, useMock } from "@/lib/db";
 import { mockDb } from "@/lib/mockData";
 import { requireAdmin } from "@/lib/apiAuth";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Context {
@@ -47,6 +48,7 @@ export async function PUT(request: NextRequest, context: Context) {
     include: { tags: { include: { tag: true } } },
   });
 
+  revalidatePath("/", "layout");
   return NextResponse.json(post);
 }
 
@@ -56,5 +58,6 @@ export async function DELETE(_request: NextRequest, context: Context) {
 
   const { id } = await context.params;
   await prisma.post.delete({ where: { id } });
+  revalidatePath("/", "layout");
   return NextResponse.json({ success: true });
 }

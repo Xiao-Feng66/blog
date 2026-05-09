@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { prisma, useMock } from "@/lib/db";
+
+export const revalidate = 86400;
 import { mockDb } from "@/lib/mockData";
 import { PostCard } from "@/components/blog/PostCard";
 

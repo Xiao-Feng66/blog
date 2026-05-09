@@ -1,6 +1,7 @@
 import { prisma, useMock } from "@/lib/db";
 import { mockDb } from "@/lib/mockData";
 import { requireAdmin } from "@/lib/apiAuth";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
@@ -19,5 +20,6 @@ export async function POST(request: NextRequest) {
 
   const { name, slug } = await request.json();
   const tag = await prisma.tag.create({ data: { name, slug } });
+  revalidatePath("/", "layout");
   return NextResponse.json(tag, { status: 201 });
 }
