@@ -302,6 +302,33 @@ export const mockDb = {
     return postsWithTags.find((p) => p.id === id) ?? null;
   },
 
+  // 分析数据（Mock）
+  getAnalytics(days: number) {
+    const trend = [];
+    const now = new Date();
+    for (let i = days - 1; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const date = d.toISOString().slice(0, 10);
+      const pv = Math.floor(Math.random() * 50) + 10;
+      const uv = Math.floor(pv * 0.6);
+      trend.push({ date, pv, uv });
+    }
+    const totalPv = trend.reduce((s, t) => s + t.pv, 0);
+    const totalUv = trend.reduce((s, t) => s + t.uv, 0);
+    return {
+      pv: totalPv,
+      uv: totalUv,
+      trend,
+      topPosts: publishedPosts.slice(0, 3).map((p, i) => ({
+        postId: p.id,
+        title: p.title,
+        slug: p.slug,
+        views: 50 - i * 15,
+      })),
+    };
+  },
+
   // API: 搜索
   getSearchablePosts() {
     return publishedPosts.map((p) => ({

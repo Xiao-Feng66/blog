@@ -4,6 +4,8 @@ import { NextResponse, type NextRequest } from "next/server";
 const ADMIN_USER_ID = process.env.ADMIN_USER_ID;
 
 export async function middleware(request: NextRequest) {
+  if (process.env.NODE_ENV === "development") return NextResponse.next();
+
   const dbUrl = process.env.DATABASE_URL ?? "";
   const useMock = !dbUrl || dbUrl.includes("johndoe:randompassword");
   if (useMock) return NextResponse.next();

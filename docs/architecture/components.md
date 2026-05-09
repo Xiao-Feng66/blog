@@ -10,15 +10,18 @@
 |------|------|------|
 | `components/ui/` | 基础 UI 组件（无业务逻辑） | `ThemeToggle.tsx` |
 | `components/blog/` | 博客前台组件 | `PostCard`, `Header`, `Footer`, `Search`, `Comments`, `Pagination` |
-| `components/admin/` | 后台管理组件 | `Sidebar`, `PostForm` |
+| `components/admin/` | 后台管理组件 | `Sidebar`, `PostForm`, `AnalyticsSection` |
 
 ## 关键组件
 
 - `ThemeProvider` (`components/ThemeProvider.tsx`)：next-themes 包装，控制暗色/亮色模式
-- `Header` / `Footer`：全局布局组件，已在 `RootLayout` 中引入
+- `LayoutShell` (`components/LayoutShell.tsx`)：条件布局组件，`/admin` 路径下隐藏 Header/Footer/BackgroundDecor
+- `Header` / `Footer`：博客前台布局组件，通过 `LayoutShell` 条件渲染
 - `PostCard`：文章列表卡片
 - `Search`：全文搜索弹窗（Client Component，flexsearch）
 - `PostForm`：文章编辑表单（Markdown 编辑器 + 预览）
+- `AnalyticsSection`：仪表盘访问分析区域（PV/UV 卡片 + Recharts 趋势图 + 热门文章排行）
+- `TrackPageView` (`components/TrackPageView.tsx`)：前台页面访问量上报（自动调用 /api/track）
 
 ## 命名规范
 

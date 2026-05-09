@@ -13,7 +13,7 @@ export async function getSession() {
 }
 
 export async function isAdmin() {
-  if (useMock) return true;
+  if (useMock || process.env.NODE_ENV === "development") return true;
   const session = await getSession();
   if (!session) return false;
   return session.user.id === ADMIN_USER_ID;

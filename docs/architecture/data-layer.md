@@ -8,7 +8,7 @@ Prisma ORM + PostgreSQL，支持本地 Mock 回退（无数据库时）。
 
 | 文件 | 职责 |
 |------|------|
-| `prisma/schema.prisma` | 数据库 Schema（Post, Tag, PostTag） |
+| `prisma/schema.prisma` | 数据库 Schema（Post, Tag, PostTag, PageView） |
 | `src/lib/db.ts` | Prisma 客户端实例 + Mock 开关 |
 | `src/lib/mockData.ts` | 本地 Mock 数据实现 |
 
@@ -18,6 +18,7 @@ Prisma ORM + PostgreSQL，支持本地 Mock 回退（无数据库时）。
 Post: id(UUID), title, slug(unique), content, summary, coverImage?, status(draft/published/hidden), createdAt, updatedAt
 Tag: id(UUID), name(unique), slug(unique)
 PostTag: postId, tagId (复合主键)
+PageView: id(UUID), path, postId?, sessionId, createdAt
 ```
 
 ## 数据访问模式

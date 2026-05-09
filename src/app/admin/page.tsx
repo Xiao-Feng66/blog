@@ -1,5 +1,6 @@
 import { prisma, useMock } from "@/lib/db";
 import { mockDb } from "@/lib/mockData";
+import { AnalyticsSection } from "@/components/admin/AnalyticsSection";
 
 export const dynamic = "force-dynamic";
 
@@ -42,6 +43,7 @@ export default async function AdminDashboard() {
           </div>
         ))}
       </div>
+      <AnalyticsSection />
     </div>
   );
 }

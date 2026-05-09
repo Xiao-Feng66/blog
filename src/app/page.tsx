@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { prisma, useMock } from "@/lib/db";
 import { mockDb } from "@/lib/mockData";
 import { PostCard } from "@/components/blog/PostCard";
@@ -20,9 +21,11 @@ export default async function Home() {
           <div className="absolute inset-0 bg-stone-100 dark:bg-stone-800 flex items-center justify-center text-xl font-light text-muted dark:text-muted-dark">
             X
           </div>
-          <img
+          <Image
             src="/avatar.jpg"
             alt=""
+            width={112}
+            height={112}
             className="relative w-full h-full object-cover"
           />
         </div>

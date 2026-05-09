@@ -20,6 +20,8 @@ RESTful API，位于 `app/api/` 下，使用 Next.js Route Handler。
 | DELETE | `/api/tags/[id]` | Admin | 删除标签 |
 | POST | `/api/revalidate` | Admin | 触发 ISR 重新验证 |
 | GET | `/api/search` | 公开 | 全文搜索（返回文章索引数据） |
+| POST | `/api/track` | 公开 | 页面访问量上报（path + postId） |
+| GET | `/api/analytics` | Admin | 访问分析数据（PV/UV/趋势/热门文章，支持 range 参数） |
 
 ## 命名约定
 

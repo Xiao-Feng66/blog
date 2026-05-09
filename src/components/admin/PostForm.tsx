@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 interface Tag {
@@ -35,12 +35,53 @@ export function PostForm({ initialData }: PostFormProps) {
   );
   const [tags, setTags] = useState<Tag[]>([]);
   const [saving, setSaving] = useState(false);
+  const [newTagName, setNewTagName] = useState("");
+  const [creatingTag, setCreatingTag] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  function fetchTags() {
     fetch("/api/tags")
       .then((r) => r.json())
       .then(setTags);
+  }
+
+  useEffect(() => {
+    fetchTags();
   }, []);
+
+  function handleFileImport(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const text = ev.target?.result;
+      if (typeof text === "string") setContent(text);
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  }
+
+  async function handleCreateTag() {
+    const name = newTagName.trim();
+    if (!name) return;
+    setCreatingTag(true);
+    const slug = name
+      .toLowerCase()
+      .replace(/[^a-z0-9一-龥]+/g, "-")
+      .replace(/^-|-$/g, "");
+    const res = await fetch("/api/tags", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, slug }),
+    });
+    if (res.ok) {
+      const created = await res.json();
+      fetchTags();
+      setSelectedTagIds((prev) => [...prev, created.id]);
+      setNewTagName("");
+    }
+    setCreatingTag(false);
+  }
 
   function handleTitleChange(value: string) {
     setTitle(value);
@@ -153,12 +194,49 @@ export function PostForm({ initialData }: PostFormProps) {
                 </label>
               );
             })}
+            <div className="flex items-center gap-1.5">
+              <input
+                type="text"
+                value={newTagName}
+                onChange={(e) => setNewTagName(e.target.value)}
+                onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); handleCreateTag(); } }}
+                placeholder="新标签名"
+                className="px-3 py-1.5 rounded-lg text-sm border border-dashed border-border dark:border-border-dark bg-transparent focus:outline-none focus:border-accent transition-colors w-24"
+              />
+              <button
+                type="button"
+                onClick={handleCreateTag}
+                disabled={creatingTag || !newTagName.trim()}
+                className="px-2.5 py-1.5 rounded-lg text-sm border border-dashed border-border dark:border-border-dark text-stone-500 dark:text-stone-400 hover:border-accent hover:text-accent disabled:opacity-40 transition-colors"
+              >
+                +
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5">内容（Markdown）</label>
+        <div className="flex items-center justify-between mb-1.5">
+          <label className="block text-sm font-medium text-stone-700 dark:text-stone-300">内容（Markdown）</label>
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs border border-border dark:border-border-dark text-stone-500 dark:text-stone-400 hover:border-accent hover:text-accent transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+            </svg>
+            导入文件
+          </button>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".md,.txt,.markdown"
+            onChange={handleFileImport}
+            className="hidden"
+          />
+        </div>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
