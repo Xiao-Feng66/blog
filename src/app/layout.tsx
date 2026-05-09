@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/blog/Header";
 import { Footer } from "@/components/blog/Footer";
+import { BackgroundDecor } from "@/components/blog/BackgroundDecor";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,6 +39,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-surface text-ink dark:bg-surface-dark dark:text-ink-dark transition-colors duration-500">
         <ThemeProvider>
+          <BackgroundDecor />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
