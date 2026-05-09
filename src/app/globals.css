@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --color-surface: #f7f5f2;
@@ -101,6 +102,26 @@ html.dark .shiki span {
 .stagger-3 { animation-delay: 0.3s; }
 .stagger-4 { animation-delay: 0.4s; }
 .stagger-5 { animation-delay: 0.5s; }
+
+@keyframes drift-1 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(30px, 20px); }
+  50% { transform: translate(-20px, 40px); }
+  75% { transform: translate(15px, -15px); }
+}
+
+@keyframes drift-2 {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-25px, -30px); }
+  50% { transform: translate(35px, -15px); }
+  75% { transform: translate(-10px, 25px); }
+}
+
+@keyframes drift-3 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(20px, -25px); }
+  66% { transform: translate(-30px, 10px); }
+}
 
 /* -- Scrollbar -- */
 ::-webkit-scrollbar {

@@ -309,6 +309,9 @@ export const mockDb = {
       title: p.title,
       slug: p.slug,
       summary: p.summary,
+      content: p.content,
+      createdAt: p.createdAt,
+      tags: p.tags.map((t) => ({ name: t.tag.name, slug: t.tag.slug })),
     }));
   },
 };
