@@ -41,6 +41,18 @@ model PostTag {
   @@map("post_tags")
 }
 
+model PageView {
+  id        String   @id @default(uuid()) @db.Uuid
+  path      String   @db.VarChar(500)
+  postId    String?  @map("post_id") @db.Uuid
+  sessionId String   @map("session_id") @db.VarChar(64)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([createdAt])
+  @@index([postId])
+  @@map("page_views")
+}
+
 enum PostStatus {
   draft
   published
