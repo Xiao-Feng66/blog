@@ -4,6 +4,8 @@ import { PostCard } from "@/components/blog/PostCard";
 import { Pagination } from "@/components/blog/Pagination";
 import type { Metadata } from "next";
 
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: "文章",
 };

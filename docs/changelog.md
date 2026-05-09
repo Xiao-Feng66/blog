@@ -6,6 +6,18 @@
 
 ## 2026-05-09
 
+### [优化] 博客前台加载性能优化
+
+- **背景**：博客文章页加载需 10+ 秒，原因是每次请求实时查库 + 编译 MDX + Shiki 语法高亮，无静态生成和缓存
+- **核心改动**：
+  1. 文章页、标签页添加 `generateStaticParams`，build 时预生成静态 HTML 推到 CDN
+  2. 所有前台页面添加 `revalidate = 86400`（1 天 ISR 缓存）
+  3. 标签列表页移除 `force-dynamic`
+  4. 文章和标签的增删改 API 成功后统一调用 `revalidatePath('/', 'layout')` 清除全量缓存
+- **涉及文件**：src/app/page.tsx, src/app/posts/page.tsx, src/app/posts/[slug]/page.tsx, src/app/tags/page.tsx, src/app/tags/[slug]/page.tsx, src/app/api/posts/route.ts, src/app/api/posts/[id]/route.ts, src/app/api/tags/route.ts, src/app/api/tags/[id]/route.ts
+
+---
+
 ### [优化] 博客前台 + 管理后台 UI 优化
 
 - **背景**：文章页标题重复显示、内容区太窄、代码块和标题对比度不足、管理后台表单和侧边栏颜色太浅

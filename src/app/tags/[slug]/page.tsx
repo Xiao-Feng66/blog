@@ -6,6 +6,14 @@ import { PostCard } from "@/components/blog/PostCard";
 import { Pagination } from "@/components/blog/Pagination";
 import type { Metadata } from "next";
 
+export const revalidate = 86400;
+
+export async function generateStaticParams() {
+  if (useMock) return [];
+  const tags = await prisma.tag.findMany({ select: { slug: true } });
+  return tags.map((t) => ({ slug: t.slug }));
+}
+
 const POSTS_PER_PAGE = 10;
 
 interface Props {

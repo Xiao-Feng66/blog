@@ -3,7 +3,7 @@ import { prisma, useMock } from "@/lib/db";
 import { mockDb } from "@/lib/mockData";
 import type { Metadata } from "next";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 86400;
 
 export const metadata: Metadata = {
   title: "标签",

@@ -1,6 +1,7 @@
 import { prisma, useMock } from "@/lib/db";
 import { mockDb } from "@/lib/mockData";
 import { requireAdmin } from "@/lib/apiAuth";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -55,5 +56,6 @@ export async function POST(request: NextRequest) {
     include: { tags: { include: { tag: true } } },
   });
 
+  revalidatePath("/", "layout");
   return NextResponse.json(post, { status: 201 });
 }
