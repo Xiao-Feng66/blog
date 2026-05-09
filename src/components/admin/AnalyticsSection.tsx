@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import {
   ResponsiveContainer,
   LineChart,
@@ -41,7 +41,25 @@ export function AnalyticsSection() {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = useCallback(async (r: string) => {
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/analytics?range=7d")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (!cancelled) {
+          if (json) setData(json);
+          setLoading(false);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
+  }, []);
+
+  const handleRange = async (r: string) => {
+    if (r === range) return;
+    setRange(r);
     setLoading(true);
     try {
       const res = await fetch(`/api/analytics?range=${r}`);
@@ -49,14 +67,6 @@ export function AnalyticsSection() {
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    fetchData(range);
-  }, [range, fetchData]);
-
-  const handleRange = (r: string) => {
-    if (r !== range) setRange(r);
   };
 
   return (
