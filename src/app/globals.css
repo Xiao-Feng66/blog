@@ -62,10 +62,10 @@ html.dark .prose :where(pre):not(:where([class~="not-prose"] *)) {
   border-color: var(--color-border-dark);
 }
 
-/* -- Shiki: prose 对 pre 设了浅色 color（假定深色背景），需要用 initial 恢复让 inline style 生效 -- */
+/* -- Shiki: prose 把 pre 的 color 设成浅色（假定深背景），Shiki 的 inline color 在 pre 上但被覆盖 -- */
 .prose pre.shiki,
 .prose pre.shiki code {
-  color: var(--shiki-light) !important;
+  color: var(--color-ink) !important;
 }
 
 html.dark .shiki,
