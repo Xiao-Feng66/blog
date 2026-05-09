@@ -7,9 +7,9 @@
   --color-surface-dark: #141210;
   --color-ink: #2c2825;
   --color-ink-dark: #e0ddd8;
-  --color-muted: #9c968e;
+  --color-muted: #78736b;
   --color-muted-dark: #6b665f;
-  --color-border: #e8e5e0;
+  --color-border: #b5b0a6;
   --color-border-dark: #2a2724;
   --color-accent: #0d9488;
   --color-accent-light: #14b8a6;
@@ -62,11 +62,21 @@ html.dark .prose :where(pre):not(:where([class~="not-prose"] *)) {
   border-color: var(--color-border-dark);
 }
 
-/* -- Shiki dark mode -- */
+/* -- Shiki: prose 对 pre/code 设了浅色文字（假定深色背景），覆盖 Shiki inline 继承链 -- */
+.prose :where(pre.shiki):not(:where([class~="not-prose"] *)),
+.prose :where(pre.shiki code):not(:where([class~="not-prose"] *)) {
+  color: inherit;
+}
+
 html.dark .shiki,
 html.dark .shiki span {
   color: var(--shiki-dark) !important;
   background-color: var(--shiki-dark-bg) !important;
+}
+
+/* -- 锚点跳转偏移：避免标题被导航栏遮挡 -- */
+.prose :where(h2, h3, h4):not(:where([class~="not-prose"] *)) {
+  scroll-margin-top: 5rem;
 }
 
 /* -- Animations -- */

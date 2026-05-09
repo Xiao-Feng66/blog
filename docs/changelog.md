@@ -6,6 +6,22 @@
 
 ## 2026-05-09
 
+### [优化] 博客前台 + 管理后台 UI 优化
+
+- **背景**：文章页标题重复显示、内容区太窄、代码块和标题对比度不足、管理后台表单和侧边栏颜色太浅
+- **核心改动**：
+  1. 修复标题重复：渲染 MDX 前剥离 markdown 首行 `# 标题`
+  2. 文章居中，容器 `max-w-3xl`（768px）
+  3. 新增左侧 TOC 目录：从 DOM 读取实际 heading ID，absolute 定位在文章左侧，sticky 粘性跟随，IntersectionObserver 高亮当前标题，点击平滑跳转（xl 屏幕以上显示）
+  4. 新增回到顶部按钮：滚动超过 400px 时出现，点击平滑回顶
+  5. 代码块对比度提升：Shiki 主题从 `github-light` 换为 `github-light-high-contrast`，背景从 `stone-50` 改为 `stone-100`
+  6. 标题样式加强：`font-light` 改为 `font-semibold`，明确设置 `text-ink` 颜色
+  7. 全局色值调深：边框 `#e8e5e0` → `#c5c0b8`，muted 文字 `#9c968e` → `#78736b`
+  8. 管理后台表单 label 和辅助文字颜色加深
+- **涉及文件**：src/app/posts/[slug]/page.tsx, src/lib/mdx.ts, src/app/globals.css, src/components/blog/TableOfContents.tsx（新增）, src/components/blog/ScrollToTop.tsx（新增）, src/components/admin/PostForm.tsx, src/components/admin/Sidebar.tsx, src/app/admin/posts/page.tsx
+
+---
+
 ### [功能] 仪表盘访问数据分析
 
 - **背景**：管理后台仪表盘只展示文章数量，无法了解博客实际访问情况和热门内容

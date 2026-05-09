@@ -123,7 +123,7 @@ export function PostForm({ initialData }: PostFormProps) {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5">标题</label>
+          <label className="block text-sm font-medium text-stone-800 dark:text-stone-200 mb-1.5">标题</label>
           <input
             type="text"
             value={title}
@@ -133,7 +133,7 @@ export function PostForm({ initialData }: PostFormProps) {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5">Slug</label>
+          <label className="block text-sm font-medium text-stone-800 dark:text-stone-200 mb-1.5">Slug</label>
           <input
             type="text"
             value={slug}
@@ -145,7 +145,7 @@ export function PostForm({ initialData }: PostFormProps) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5">摘要</label>
+        <label className="block text-sm font-medium text-stone-800 dark:text-stone-200 mb-1.5">摘要</label>
         <textarea
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
@@ -157,7 +157,7 @@ export function PostForm({ initialData }: PostFormProps) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5">状态</label>
+          <label className="block text-sm font-medium text-stone-800 dark:text-stone-200 mb-1.5">状态</label>
           <select value={status} onChange={(e) => setStatus(e.target.value)} className={inputClass}>
             <option value="draft">草稿</option>
             <option value="published">已发布</option>
@@ -165,7 +165,7 @@ export function PostForm({ initialData }: PostFormProps) {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-1.5">标签</label>
+          <label className="block text-sm font-medium text-stone-800 dark:text-stone-200 mb-1.5">标签</label>
           <div className="flex flex-wrap gap-2 mt-1">
             {tags.map((tag) => {
               const checked = selectedTagIds.includes(tag.id);
@@ -175,7 +175,7 @@ export function PostForm({ initialData }: PostFormProps) {
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm cursor-pointer transition-colors border ${
                     checked
                       ? "border-accent bg-accent/10 text-accent"
-                      : "border-border dark:border-border-dark text-stone-600 dark:text-stone-400 hover:border-stone-300 dark:hover:border-stone-600"
+                      : "border-border dark:border-border-dark text-stone-700 dark:text-stone-300 hover:border-stone-300 dark:hover:border-stone-600"
                   }`}
                 >
                   <input
@@ -207,7 +207,7 @@ export function PostForm({ initialData }: PostFormProps) {
                 type="button"
                 onClick={handleCreateTag}
                 disabled={creatingTag || !newTagName.trim()}
-                className="px-2.5 py-1.5 rounded-lg text-sm border border-dashed border-border dark:border-border-dark text-stone-500 dark:text-stone-400 hover:border-accent hover:text-accent disabled:opacity-40 transition-colors"
+                className="px-2.5 py-1.5 rounded-lg text-sm border border-dashed border-border dark:border-border-dark text-stone-600 dark:text-stone-300 hover:border-accent hover:text-accent disabled:opacity-40 transition-colors"
               >
                 +
               </button>
@@ -218,11 +218,11 @@ export function PostForm({ initialData }: PostFormProps) {
 
       <div>
         <div className="flex items-center justify-between mb-1.5">
-          <label className="block text-sm font-medium text-stone-700 dark:text-stone-300">内容（Markdown）</label>
+          <label className="block text-sm font-medium text-stone-800 dark:text-stone-200">内容（Markdown）</label>
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs border border-border dark:border-border-dark text-stone-500 dark:text-stone-400 hover:border-accent hover:text-accent transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs border border-border dark:border-border-dark text-stone-600 dark:text-stone-300 hover:border-accent hover:text-accent transition-colors"
           >
             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />

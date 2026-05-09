@@ -63,7 +63,7 @@ export default function AdminPostsPage() {
             className={`px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               filter === s
                 ? "bg-accent text-white"
-                : "text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800"
+                : "text-stone-700 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
             }`}
           >
             {s ? statusLabels[s] : "全部"}
