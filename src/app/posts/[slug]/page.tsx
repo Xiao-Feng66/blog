@@ -37,7 +37,9 @@ export default async function PostPage({ params }: Props) {
   const content = await renderMDX(post.content);
 
   return (
-    <article className="mx-auto max-w-2xl px-6 py-20 animate-fade-in">
+    <>
+      <meta name="x-post-id" content={post.id} />
+      <article className="mx-auto max-w-2xl px-6 py-20 animate-fade-in">
       <header className="mb-12">
         <div className="flex items-center gap-3 text-xs text-muted dark:text-muted-dark mb-6">
           <time dateTime={post.createdAt.toISOString()}>{formatDate(post.createdAt)}</time>
@@ -59,6 +61,7 @@ export default async function PostPage({ params }: Props) {
         {content}
       </div>
       <Comments />
-    </article>
+      </article>
+    </>
   );
 }
