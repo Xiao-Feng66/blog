@@ -8,6 +8,8 @@
 - [x] 文章内容加宽（`max-w-2xl` → `max-w-3xl`）
 - [x] 新增左侧 TOC 目录组件（DOM 读取 heading、IntersectionObserver 高亮）
 - [x] 代码块主题换为 `github-light-high-contrast`，背景 `stone-50` → `stone-100`
+- [x] 代码块文字颜色修复（Shiki 未处理无语言标识的代码块 + prose-stone 的 pre-code 变量近白色）
+- [x] 表格渲染修复（添加 remark-gfm 支持 GFM 表格语法）
 - [x] 标题样式 `font-light` → `font-semibold` + `text-ink` 颜色
 - [x] 全局边框色加深（`#e8e5e0` → `#b5b0a6`）
 - [x] 全局 muted 文字色加深（`#9c968e` → `#78736b`）

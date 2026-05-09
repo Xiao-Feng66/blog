@@ -62,10 +62,16 @@ html.dark .prose :where(pre):not(:where([class~="not-prose"] *)) {
   border-color: var(--color-border-dark);
 }
 
-/* -- Shiki: prose 把 pre 的 color 设成浅色（假定深背景），Shiki 的 inline color 在 pre 上但被覆盖 -- */
-.prose pre.shiki,
-.prose pre.shiki code {
-  color: var(--color-ink) !important;
+/* -- prose 代码块：覆盖 prose-stone 的近白色 pre-code 变量 -- */
+.prose {
+  --tw-prose-pre-code: var(--color-ink);
+}
+
+/* -- Shiki dual-theme: defaultColor:false 后所有颜色都通过 CSS 变量输出 -- */
+.shiki,
+.shiki span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg) !important;
 }
 
 html.dark .shiki,
