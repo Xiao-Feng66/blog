@@ -6,6 +6,18 @@
 
 ## 2026-05-09
 
+### [功能] 管理后台体验增强
+
+- **背景**：新建文章只能手动输入内容、标签区域空白无法新建、后台页面显示博客前台导航栏
+- **核心改动**：
+  1. PostForm 添加 Markdown 文件导入按钮（FileReader 读取后填入 textarea）
+  2. 标签区域支持内联新建标签（输入框 + POST /api/tags + 自动勾选）
+  3. 新建 LayoutShell 组件，/admin 路径下隐藏 Header/Footer/BackgroundDecor
+  4. Sidebar 添加"查看博客"链接跳转博客首页
+- **涉及文件**：src/components/admin/PostForm.tsx, src/components/LayoutShell.tsx, src/app/layout.tsx, src/components/admin/Sidebar.tsx
+
+---
+
 ### [修复] Vercel 部署问题修复
 
 - **背景**：首次部署到 Vercel 时构建卡在 "Installing dependencies"，以及管理后台登录流程存在问题

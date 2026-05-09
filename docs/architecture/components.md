@@ -15,7 +15,8 @@
 ## 关键组件
 
 - `ThemeProvider` (`components/ThemeProvider.tsx`)：next-themes 包装，控制暗色/亮色模式
-- `Header` / `Footer`：全局布局组件，已在 `RootLayout` 中引入
+- `LayoutShell` (`components/LayoutShell.tsx`)：条件布局组件，`/admin` 路径下隐藏 Header/Footer/BackgroundDecor
+- `Header` / `Footer`：博客前台布局组件，通过 `LayoutShell` 条件渲染
 - `PostCard`：文章列表卡片
 - `Search`：全文搜索弹窗（Client Component，flexsearch）
 - `PostForm`：文章编辑表单（Markdown 编辑器 + 预览）
