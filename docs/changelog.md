@@ -6,6 +6,19 @@
 
 ## 2026-05-09
 
+### [功能] 仪表盘访问数据分析
+
+- **背景**：管理后台仪表盘只展示文章数量，无法了解博客实际访问情况和热门内容
+- **核心改动**：
+  1. 新增 PageView 数据模型（page_views 表），记录页面访问路径、访客标识、时间
+  2. 新增 `POST /api/track` 采集路由，前台页面加载时自动上报访问量（hash IP 生成 sessionId，隐私友好）
+  3. 新增 `GET /api/analytics` 查询路由，支持 7 天/30 天时间维度筛选
+  4. 新增 TrackPageView 组件集成到 LayoutShell，非 admin 页面自动追踪
+  5. 新增 AnalyticsSection 仪表盘组件（PV/UV 统计卡片 + Recharts 折线图 + 热门文章排行）
+- **涉及文件**：prisma/schema.prisma, src/app/api/track/route.ts, src/app/api/analytics/route.ts, src/components/TrackPageView.tsx, src/components/LayoutShell.tsx, src/components/admin/AnalyticsSection.tsx, src/app/admin/page.tsx, src/lib/mockData.ts
+
+---
+
 ### [功能] 管理后台体验增强
 
 - **背景**：新建文章只能手动输入内容、标签区域空白无法新建、后台页面显示博客前台导航栏
