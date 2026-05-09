@@ -6,6 +6,7 @@ import { renderMDX } from "@/lib/mdx";
 import { formatDate } from "@/lib/formatDate";
 import { Comments } from "@/components/blog/Comments";
 import { TableOfContents } from "@/components/blog/TableOfContents";
+import { ScrollToTop } from "@/components/blog/ScrollToTop";
 import type { Metadata } from "next";
 
 interface Props {
@@ -67,6 +68,7 @@ export default async function PostPage({ params }: Props) {
           <Comments />
         </article>
       </div>
+      <ScrollToTop />
     </>
   );
 }

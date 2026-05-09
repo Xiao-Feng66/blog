@@ -37,7 +37,6 @@ function useHeadings(): TocHeading[] {
 export function TableOfContents() {
   const headings = useHeadings();
   const [activeId, setActiveId] = useState("");
-  const [showTop, setShowTop] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -64,14 +63,6 @@ export function TableOfContents() {
     els.forEach((el) => observerRef.current!.observe(el));
     return () => observerRef.current?.disconnect();
   }, [headings]);
-
-  useEffect(() => {
-    function onScroll() {
-      setShowTop(window.scrollY > 400);
-    }
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -116,17 +107,6 @@ export function TableOfContents() {
             </li>
           ))}
         </ul>
-        {showTop && (
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="mt-4 flex items-center gap-2 px-3 py-2 w-full rounded-lg text-sm text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-            </svg>
-            回到顶部
-          </button>
-        )}
       </div>
     </nav>
   );
