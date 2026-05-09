@@ -12,53 +12,40 @@
 - **认证**：Supabase Auth (GitHub OAuth)
 - **部署**：Vercel
 
-## 技术决策
+## AI 工作指南
 
-- 前台使用 SSG + ISR，文章页静态生成，数据更新后增量刷新
-- 后台使用 CSR，不需要 SEO
-- 内容格式为 Markdown，存储在数据库中，渲染时用 MDX 处理
-- 代码高亮使用 Shiki
-- 暗色/亮色模式通过 next-themes 实现
-- 全文搜索使用 flexsearch（客户端搜索，无需后端服务）
-- 评论系统使用 Giscus（基于 GitHub Discussions）
+按任务类型阅读对应文档，避免一次性读完全部源码：
 
-## 项目结构
+| 任务 | 阅读顺序 |
+|------|---------|
+| 了解整体架构 | `docs/architecture/README.md` |
+| 改页面/路由/布局 | `docs/architecture/routing.md` + `rendering.md` |
+| 改数据库/表结构 | `docs/architecture/data-layer.md` |
+| 改 API 接口 | `docs/architecture/api.md` + `data-layer.md` |
+| 改登录/权限 | `docs/architecture/auth.md` |
+| 改 UI 组件 | `docs/architecture/components.md` + `rendering.md` |
+
+## 项目结构（目录级）
 
 ```
 src/
-├── app/                        # Next.js App Router
-│   ├── layout.tsx              # 根布局
-│   ├── page.tsx                # 首页（文章列表）
-│   ├── posts/[slug]/page.tsx   # 文章详情
-│   ├── tags/                   # 标签相关页面
-│   ├── about/page.tsx          # 关于页
-│   └── admin/                  # 管理后台
-│       ├── layout.tsx          # 后台布局（含登录守卫）
-│       ├── page.tsx            # 仪表盘
-│       ├── posts/              # 文章管理（列表/新建/编辑）
-│       └── tags/page.tsx       # 标签管理
-├── components/
-│   ├── ui/                     # 基础 UI 组件
-│   ├── blog/                   # 博客前台组件
-│   └── admin/                  # 后台组件
-└── lib/
-    ├── db.ts                   # Prisma 客户端
-    ├── supabase.ts             # Supabase 客户端（浏览器端）
-    ├── supabase-server.ts      # Supabase 客户端（服务端）
-    ├── auth.ts                 # 认证工具
-    ├── apiAuth.ts              # API 路由认证守卫
-    ├── mdx.ts                  # MDX 渲染
-    └── formatDate.ts           # 日期格式化
+├── app/           # Next.js App Router（前台 + 后台 + API）
+├── components/    # 组件（ui / blog / admin）
+├── lib/           # 工具函数、客户端、认证
+└── generated/     # Prisma 生成代码
 ```
+
+详细路由、组件分层、API 清单见 `docs/architecture/` 各子文档。
 
 ## 数据模型
 
 ```
-posts:      id, title, slug, content, summary, cover_image,
-            status(draft/published/hidden), created_at, updated_at
-tags:       id, name, slug
-post_tags:  post_id, tag_id
+Post:  id, title, slug, content, summary, coverImage?, status, createdAt, updatedAt
+Tag:   id, name, slug
+PostTag: postId, tagId
 ```
+
+详见 `docs/architecture/data-layer.md`。
 
 ## 常用命令
 
@@ -86,11 +73,20 @@ npx prisma generate     # 生成 Prisma 客户端类型
 
 ```
 docs/
-├── changelog.md                       # 变更日志（语义化，记录为什么改）
-├── lessons.md                         # 经验教训（被纠正后更新）
-└── design/YYYY-MM-DD-topic/           # 设计方案目录
-    ├── design.md                      # 技术方案（source of truth）
-    └── todo.md                        # 任务清单（可勾选条目）
+├── architecture/                       # 架构文档（AI 按需读取）
+│   ├── README.md                       # 架构总览 + AI 导航
+│   ├── routing.md                      # 路由结构
+│   ├── data-layer.md                   # 数据层
+│   ├── auth.md                         # 认证与权限
+│   ├── api.md                          # API 路由
+│   ├── components.md                   # 组件体系
+│   └── rendering.md                    # 渲染策略
+├── changelog.md                        # 变更日志（语义化，记录为什么改）
+├── lessons.md                          # 经验教训（被纠正后更新）
+├── design/YYYY-MM-DD-topic/            # 设计方案目录
+│   ├── design.md                       # 技术方案（source of truth）
+│   └── todo.md                         # 任务清单（可勾选条目）
+└── workflow.md                         # 开发工作流
 ```
 
 ## 开发工作流
